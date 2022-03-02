@@ -1,30 +1,3 @@
-<?php
-// error_reporting(E_ALL); 
-// ini_set("display_errors", 1);
-include('./php/db.php');
-session_start();
-
-if (!isset($_SESSION['uid'])) {
-	$uid = $_COOKIE['uid'];
-	if ($uid){
-	    $sql = "SELECT * FROM users WHERE uid = '".$uid."'";
-	    $result = mysqli_query($conn, $sql);
-	    if(!($row = mysqli_fetch_array($result))) {
-			unset($_COOKIE['uid']);
-			setcookie('uid', '', time() - 3600, '/');
-	    } else{
-	    	if($row['policy_agree']){
-		        $_SESSION['uid'] = $row['uid'];
-		        $_SESSION['nickname'] = $row['nickname'];
-		        $_SESSION['profile'] = $row['profile'];
-		    } else{
-				echo("<script>window.open('./policy_agree.php', '_self');</script>");
-		    }
-	    }
-	}
-}
-
-?>
 <!DOCTYPE html>
 <html>
 	<head>
